@@ -1,7 +1,7 @@
 """
 Final Project 
 names: Getahun Seyoum, Yamlak Shimelis, Charlie Smith
-Date: 04/17/2022
+Date: 04/26/2022
 Course: INST 326
 """
 from asyncore import read
@@ -9,7 +9,11 @@ import pandas as pd
 
 """We will need to find a database cv file of various movies
  we can use in our project to recommend movies"""
-movies=pd.read_csv
+
+path = "/Users/getahunseyoum/Desktop/archive"
+movies=pd.read_csv(path + "/movies_metadata.csv")
+movies=pd.read_csv(path + "/credits.csv")
+movies.head()
 
 """The user will input a movie title they've enjoyed which will then 
 be used to recommend another or a list of movies they will also enjoy"""
