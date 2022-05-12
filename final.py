@@ -8,20 +8,37 @@ from asyncore import read
 import pandas as pd
 import numpy as np
 
+"""
+
+set_options expands the dataset within the terminal to make it easier to view
+
+"""
 pd.set_option("display.max_columns", None)
 pd.options.display.width = 0
 
 
-"""We will need to find a database cv file of various movies
- we can use in our project to recommend movies"""
+""" 
 
+We found a movies and credits database on kaggle.com
+(https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata?select=tmdb_5000_credits.csv).
+We used a dataset with only 5000 movies for better functionality. We used pandas to read in and view the dataset. 
+We isoated 4 coulumn in the dataset('id','title','cast','crew') that were useful for the content-based systems
 
+We merged the two datasets through the common column 'id'
+
+"""
 movies_data = pd.read_csv('tmdb_5000_movies.csv')
 credits_data = pd.read_csv('tmdb_5000_credits.csv')
-
 credits_data.columns = ['id','title','cast','crew']
 movies_data = movies_data.merge(credits_data, on="id")
 
+"""
+The original dataset presented the traits in a form of lists. We imported literal_eval so it can allow us to 
+access the data in the collumns as strings. We then isolated "cast", "crew", "keywords", "genres" from the dataset 
+and created a new list named "traits."
+
+The for loop created below allows us to apply literal_eval to each trait. 
+"""
 
 from ast import literal_eval
 traits = ["cast", "crew", "keywords", "genres"]
@@ -31,19 +48,35 @@ for trait in traits:
 
 
 def find_director(d):
-    for i in d:
-        if i["job"] == "Director":
-            return i["name"]
-    return np.nan
+    """
+    Args:
+        The parameter is d. This function seperates the name(string) of the director the user inputs.
+    
+    Return:
+        The name of the director(string)
+    """
+    for j in d:
+        if j["job"] == "Director":
+            return j["name"]
+    
+def get_list(l):
+    """
+    Args: 
+        The parameter is x. This will return a list of
 
-def get_list(x):
-    if isinstance(x, list):
-        names = [i["name"] for i in x]
-        if len(names) > 3:
-            names = names[:3]
-        return names
+    Return: 
+        (list) This will return the first three names on the dataset  
+    """
+    if isinstance(l, list):
+        list_names = [j["name"] for j in l]
+        if len(list_names) > 3:
+            list_names = list_names[:3]
+        return list_names
     return []
 
+"""
+This is retrieving
+"""
 movies_data["director"] = movies_data["crew"].apply(find_director)
 traits = ["cast", "keywords", "genres"]
 for trait in traits:
