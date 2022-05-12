@@ -15,8 +15,6 @@ pd.options.display.width = 0
 """We will need to find a database cv file of various movies
  we can use in our project to recommend movies"""
 
-#movies_data = pd.read_csv('Movies.csv')
-#print(movies_data)
 
 movies_data = pd.read_csv('tmdb_5000_movies.csv')
 credits_data = pd.read_csv('tmdb_5000_credits.csv')
@@ -65,9 +63,9 @@ for trait in traits:
     movies_data[trait] = movies_data[trait].apply(clean_data)
 
 
-def create_soup(traits):
+def movie_soup(traits):
     return ' '.join(traits['keywords']) + ' ' + ' '.join(traits['cast']) + ' ' + traits['director'] + ' ' + ' '.join(traits['genres'])
-movies_data["soup"] = movies_data.apply(create_soup, axis=1)
+movies_data["soup"] = movies_data.apply(movie_soup, axis=1)
 print(movies_data["soup"].head())
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -89,11 +87,10 @@ print(indices.head())
 
 def get_recommendations(original_title, cosine_sim2):
     idx = indices[original_title]
-    similarity_scores = list(enumerate(cosine_sim2[idx]))
-    similarity_scores= sorted(similarity_scores, key=lambda x: x[1], reverse=True)
-    similarity_scores= similarity_scores[1:11]
-    # (a, b) where a is id of movie, b is similarity_scores
-    movies_indices = [ind[0] for ind in similarity_scores]
+    sim_scores = list(enumerate(cosine_sim2[idx]))
+    sim_scores= sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores= sim_scores[1:11]
+    movies_indices = [ind[0] for ind in sim_scores]
     movies = movies_data["original_title"].iloc[movies_indices]
     return movies
 
@@ -105,6 +102,5 @@ print(m)
 
 print(get_recommendations(m, cosine_sim2))
 
-#print("Recommendations for Avengers")
-#print(get_recommendations("The Avengers", cosine_sim2))
+#Examples that work include "The Dark Knight Rises" or "The Avengers"
 
