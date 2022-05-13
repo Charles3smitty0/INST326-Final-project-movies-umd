@@ -98,9 +98,9 @@ def cleanup_dataset(rows):
     """
     #if type(rows) is list:
     if isinstance(rows, list):
-        #for i in rows:
+        #for r in rows:
             #str.lower(i.replace(" ", "")) or try str.lower(i.strip())
-        return [str.lower(i.replace(" ", "")) for i in rows]
+        return [str.lower(r.replace(" ", "")) for r in rows]
     else:
         #if type(rows) is str
         if isinstance(rows, str):
