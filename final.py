@@ -115,8 +115,10 @@ for trait in traits:
 
 def movie_soup(traits):
     """
+    
     Args: 
         traits(string): Isolates specific columns in the data we'd like to use and see    
+    
     Returns: 
         All data (strings) joined together
     """
@@ -124,6 +126,11 @@ def movie_soup(traits):
 movies_data["soup"] = movies_data.apply(movie_soup, axis=1)
 print(movies_data["soup"].head())
 
+"""
+learned about sklearn from(citation below):
+How to install scikit-learn on macos? GeeksforGeeks. (2021, September 30). Retrieved May 9, 2022, 
+from https://www.geeksforgeeks.org/how-to-install-scikit-learn-on-macos/ 
+"""
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
