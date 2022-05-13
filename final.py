@@ -88,29 +88,29 @@ for trait in traits:
     movies_data[trait] = movies_data[trait].apply(create_list)
 
 
-def clean_data(row):
+def cleanup_dataset(rows):
     """ Converts into lowercase and removes whitespace characters
     Args:
-        row(string): row of data
+        rows(string): rows of data
     
     Returns:
         String of data after whitespace characters are removed and characters are lowercase
     """
-    #if type(row) is list:
-    if isinstance(row, list):
-        #for i in row:
+    #if type(rows) is list:
+    if isinstance(rows, list):
+        #for i in rows:
             #str.lower(i.replace(" ", "")) or try str.lower(i.strip())
-        return [str.lower(i.replace(" ", "")) for i in row]
+        return [str.lower(i.replace(" ", "")) for i in rows]
     else:
-        #if type(row) is str
-        if isinstance(row, str):
-            #str.lower(row.strip())
-            return str.lower(row.replace(" ", ""))
+        #if type(rows) is str
+        if isinstance(rows, str):
+            #str.lower(rows.strip())
+            return str.lower(rows.replace(" ", ""))
         else:
             return ""
 traits = ['cast', 'keywords', 'director', 'genres']
 for trait in traits:
-    movies_data[trait] = movies_data[trait].apply(clean_data)
+    movies_data[trait] = movies_data[trait].apply(cleanup_dataset)
 
 
 def movie_soup(traits):
