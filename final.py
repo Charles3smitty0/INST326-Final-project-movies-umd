@@ -61,13 +61,13 @@ def find_director(d):
         if j["job"] == "Director":
             return j["name"]
     
-def get_list(l):
+def create_list(l):
     """
     Args: 
         l(list): Creats a list of the names of directors
 
     Return: 
-        (list) This will return the first three names on the dataset  
+        (list): This will return the first three names on the dataset  
     """
     #if type(l) is list:
     if isinstance(l, list):
@@ -85,7 +85,7 @@ This is retrieving
 movies_data["director"] = movies_data["crew"].apply(find_director)
 traits = ["cast", "keywords", "genres"]
 for trait in traits:
-    movies_data[trait] = movies_data[trait].apply(get_list)
+    movies_data[trait] = movies_data[trait].apply(create_list)
 
 
 def clean_data(row):
