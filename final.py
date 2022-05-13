@@ -127,9 +127,15 @@ movies_data["soup"] = movies_data.apply(movie_soup, axis=1)
 print(movies_data["soup"].head())
 
 """
-learned about sklearn from(citation below):
+We earned about sklearn from(citation below):
 How to install scikit-learn on macos? GeeksforGeeks. (2021, September 30). Retrieved May 9, 2022, 
 from https://www.geeksforgeeks.org/how-to-install-scikit-learn-on-macos/ 
+
+CountVectorizer is used to load the data and change it into a vectorizer. It counts the number of times a 
+word is used and outputs a visual
+
+cosine_similarity is used to computes similarity as the normalized dot product of the output
+
 """
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -143,10 +149,10 @@ cosine_movies = cosine_similarity(counts_matrix, counts_matrix)
 print(cosine_movies.shape)
 
 movies_dataset = movies_data.reset_index()
-movie_indices = pd.Series(movies_dataset.index, index=movies_dataset['original_title'])
+movie_indc = pd.Series(movies_dataset.index, index=movies_dataset['original_title'])
 
-movie_indices = pd.Series(movies_dataset.index, index=movies_dataset["original_title"]).drop_duplicates()
-print(movie_indices.head())
+movie_indc = pd.Series(movies_dataset.index, index=movies_dataset["original_title"]).drop_duplicates()
+print(movie_indc.head())
 
 def list_recommendation(original_title, cosine_movies):
     """
@@ -157,7 +163,7 @@ def list_recommendation(original_title, cosine_movies):
     Return:
         movies_rec(list): A list of movies the user might be interested in based on their input
     """
-    movies_idex = movie_indices[original_title]
+    movies_idex = movie_indc[original_title]
     movie_scores = list(enumerate(cosine_movies[movies_idex]))
     movie_scores= sorted(movie_scores, key=lambda x: x[1], reverse=True)
     movie_scores= movie_scores[1:11]
@@ -167,11 +173,11 @@ def list_recommendation(original_title, cosine_movies):
 
 print("This is a content based movie reccomendation system.")
 print("Input a movie that you have enjoyed, and the system will return similar movies to that title.")
-m = input()
+user_input = input()
 print("Movies similar to:")
-print(m)
+print(user_input)
 
-print(list_recommendation(m, cosine_movies))
+print(list_recommendation(user_input, cosine_movies))
 
 #Examples that work include "The Dark Knight Rises" or "The Avengers"
 
