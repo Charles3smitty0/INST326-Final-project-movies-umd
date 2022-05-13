@@ -49,10 +49,11 @@ for trait in traits:
 
 def find_director(d):
     """
+    This function seperates the name(string) of the director the user inputs.
     Args:
-        The parameter is d. This function seperates the name(string) of the director the user inputs.
+        d: what is d?
     
-    Return:
+    Returns:
         The name of the director (string)
     """
     for j in d:
@@ -68,6 +69,7 @@ def get_list(l):
     Return: 
         (list) This will return the first three names on the dataset  
     """
+    #if type(l) is list:
     if isinstance(l, list):
         #for j in l:
             #list_names = j["name"]
@@ -94,11 +96,13 @@ def clean_data(row):
     Returns:
         String of data after whitespace characters are removed and characters are lowercase
     """
+    #if type(row) is list:
     if isinstance(row, list):
         #for i in row:
             #str.lower(i.replace(" ", "")) or try str.lower(i.strip())
         return [str.lower(i.replace(" ", "")) for i in row]
     else:
+        #if type(row) is str
         if isinstance(row, str):
             #str.lower(row.strip())
             return str.lower(row.replace(" ", ""))
@@ -110,6 +114,10 @@ for trait in traits:
 
 
 def movie_soup(traits):
+    """
+    Returns: 
+        All data (strings) joined together
+    """
     return ' '.join(traits['keywords']) + ' ' + ' '.join(traits['cast']) + ' ' + traits['director'] + ' ' + ' '.join(traits['genres'])
 movies_data["soup"] = movies_data.apply(movie_soup, axis=1)
 print(movies_data["soup"].head())
