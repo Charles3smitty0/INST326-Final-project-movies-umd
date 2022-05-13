@@ -115,6 +115,8 @@ for trait in traits:
 
 def movie_soup(traits):
     """
+    Args: 
+        traits(string): Isolates specific columns in the data we'd like to use and see    
     Returns: 
         All data (strings) joined together
     """
