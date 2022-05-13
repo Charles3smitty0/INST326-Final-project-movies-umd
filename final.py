@@ -51,9 +51,8 @@ def find_director(d):
     """
    
     Args:
-        This function seperates the name(string) of the director the user inputs.
-        Parameter: d
-    
+        d: seperates the name(string) of the director the user inputs.
+        
     Returns:
         The name of the director (string)
     """
@@ -65,7 +64,7 @@ def find_director(d):
 def get_list(l):
     """
     Args: 
-        The parameter is l
+        l(list): Creats a list of the names of directors
 
     Return: 
         (list) This will return the first three names on the dataset  
