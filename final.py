@@ -134,36 +134,36 @@ from https://www.geeksforgeeks.org/how-to-install-scikit-learn-on-macos/
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-count_vectorizer = CountVectorizer(stop_words="english")
-count_matrix = count_vectorizer.fit_transform(movies_data["soup"])
+counts_vectorizer = CountVectorizer(stop_words="english")
+counts_matrix = counts_vectorizer.fit_transform(movies_data["soup"])
 
-print(count_matrix.shape)
+print(counts_matrix.shape)
 
-cosine_sim2 = cosine_similarity(count_matrix, count_matrix) 
-print(cosine_sim2.shape)
+cosine_movies = cosine_similarity(counts_matrix, counts_matrix) 
+print(cosine_movies.shape)
 
-movies_data = movies_data.reset_index()
-indices = pd.Series(movies_data.index, index=movies_data['original_title'])
+movies_dataset = movies_data.reset_index()
+movie_indices = pd.Series(movies_dataset.index, index=movies_dataset['original_title'])
 
-indices = pd.Series(movies_data.index, index=movies_data["original_title"]).drop_duplicates()
-print(indices.head())
+movie_indices = pd.Series(movies_dataset.index, index=movies_dataset["original_title"]).drop_duplicates()
+print(movie_indices.head())
 
-def get_recommendations(original_title, cosine_sim2):
+def list_recommendation(original_title, cosine_movies):
     """
     Args:
-        Original_title():
-        Cosine_sim2():
+        Original_title(string): Takes the title of the movie inputed
+        cosine_movies(list): takes other movies similar to the one the user inputed
     
     Return:
-        Movies(list): A list of movies the user might be interested in based on their input
+        movies_rec(list): A list of movies the user might be interested in based on their input
     """
-    idx = indices[original_title]
-    sim_scores = list(enumerate(cosine_sim2[idx]))
-    sim_scores= sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores= sim_scores[1:11]
-    movies_indices = [ind[0] for ind in sim_scores]
-    movies = movies_data["original_title"].iloc[movies_indices]
-    return movies
+    movies_idex = movie_indices[original_title]
+    movie_scores = list(enumerate(cosine_movies[movies_idex]))
+    movie_scores= sorted(movie_scores, key=lambda x: x[1], reverse=True)
+    movie_scores= movie_scores[1:11]
+    movie_ids = [idc[0] for idc in movie_scores]
+    movies_rec = movies_data["original_title"].iloc[movie_ids]
+    return movies_rec
 
 print("This is a content based movie reccomendation system.")
 print("Input a movie that you have enjoyed, and the system will return similar movies to that title.")
@@ -171,7 +171,7 @@ m = input()
 print("Movies similar to:")
 print(m)
 
-print(get_recommendations(m, cosine_sim2))
+print(list_recommendation(m, cosine_movies))
 
 #Examples that work include "The Dark Knight Rises" or "The Avengers"
 
