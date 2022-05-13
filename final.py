@@ -49,9 +49,10 @@ for trait in traits:
 
 def find_director(d):
     """
-    This function seperates the name(string) of the director the user inputs.
+   
     Args:
-        d: what is d?
+        This function seperates the name(string) of the director the user inputs.
+        Parameter: d
     
     Returns:
         The name of the director (string)
