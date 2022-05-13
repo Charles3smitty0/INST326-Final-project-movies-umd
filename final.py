@@ -142,6 +142,14 @@ indices = pd.Series(movies_data.index, index=movies_data["original_title"]).drop
 print(indices.head())
 
 def get_recommendations(original_title, cosine_sim2):
+    """
+    Args:
+        Original_title():
+        Cosine_sim2():
+    
+    Return:
+        Movies(list): A list of movies the user might be interested in based on their input
+    """
     idx = indices[original_title]
     sim_scores = list(enumerate(cosine_sim2[idx]))
     sim_scores= sorted(sim_scores, key=lambda x: x[1], reverse=True)
