@@ -31,6 +31,7 @@ movies_data = pd.read_csv('tmdb_5000_movies.csv')
 credits_data = pd.read_csv('tmdb_5000_credits.csv')
 credits_data.columns = ['id','title','cast','crew']
 movies_data = movies_data.merge(credits_data, on="id")
+#unit test: print(movies_data)
 
 """
 The original dataset presented the traits in a form of lists. We imported literal_eval so it can allow us to 
@@ -80,12 +81,13 @@ def create_list(l):
     return []
 
 """
-This is retrieving
+This is retrieving the name of the direct and creating a new column "director"
 """
 movies_data["director"] = movies_data["crew"].apply(find_director)
 traits = ["cast", "keywords", "genres"]
 for trait in traits:
     movies_data[trait] = movies_data[trait].apply(create_list)
+#unit test: print(movies_data[trait])
 
 
 def cleanup_dataset(rows):
@@ -124,18 +126,19 @@ def movie_soup(traits):
     """
     return ' '.join(traits['keywords']) + ' ' + ' '.join(traits['cast']) + ' ' + traits['director'] + ' ' + ' '.join(traits['genres'])
 movies_data["soup"] = movies_data.apply(movie_soup, axis=1)
-print(movies_data["soup"].head())
+#unit test: print(movies_data["soup"].head())
 
 """
 We earned about sklearn from(citation below):
-How to install scikit-learn on macos? GeeksforGeeks. (2021, September 30). Retrieved May 9, 2022, 
-from https://www.geeksforgeeks.org/how-to-install-scikit-learn-on-macos/ 
+https://www.geeksforgeeks.org/how-to-install-scikit-learn-on-macos/ 
+
+This notbook taught us how to use the CountVectorizer and cosine_similary.
+https://www.kaggle.com/code/rounakbanik/movie-recommender-systems/notebook
 
 CountVectorizer is used to load the data and change it into a vectorizer. It counts the number of times a 
 word is used and outputs a visual
 
 cosine_similarity is used to computes similarity as the normalized dot product of the output
-
 """
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -143,16 +146,16 @@ from sklearn.metrics.pairwise import cosine_similarity
 counts_vectorizer = CountVectorizer(stop_words="english")
 counts_matrix = counts_vectorizer.fit_transform(movies_data["soup"])
 
-print(counts_matrix.shape)
+#unit test: print(counts_matrix.shape)
 
 cosine_movies = cosine_similarity(counts_matrix, counts_matrix) 
-print(cosine_movies.shape)
+#unit test: print(cosine_movies.shape)
 
 movies_dataset = movies_data.reset_index()
 movie_indc = pd.Series(movies_dataset.index, index=movies_dataset['original_title'])
 
 movie_indc = pd.Series(movies_dataset.index, index=movies_dataset["original_title"]).drop_duplicates()
-print(movie_indc.head())
+#unit test: print(movie_indc.head())
 
 def list_recommendation(original_title, cosine_movies):
     """
