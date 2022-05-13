@@ -53,21 +53,24 @@ def find_director(d):
         The parameter is d. This function seperates the name(string) of the director the user inputs.
     
     Return:
-        The name of the director(string)
+        The name of the director (string)
     """
     for j in d:
+        #if j["job"] is "Director"
         if j["job"] == "Director":
             return j["name"]
     
 def get_list(l):
     """
     Args: 
-        The parameter is x. This will return a list of
+        The parameter is l
 
     Return: 
         (list) This will return the first three names on the dataset  
     """
     if isinstance(l, list):
+        #for j in l:
+            #list_names = j["name"]
         list_names = [j["name"] for j in l]
         if len(list_names) > 3:
             list_names = list_names[:3]
@@ -84,10 +87,20 @@ for trait in traits:
 
 
 def clean_data(row):
+    """ Converts into lowercase and removes whitespace characters
+    Args:
+        row(string): row of data
+    
+    Returns:
+        String of data after whitespace characters are removed and characters are lowercase
+    """
     if isinstance(row, list):
+        #for i in row:
+            #str.lower(i.replace(" ", "")) or try str.lower(i.strip())
         return [str.lower(i.replace(" ", "")) for i in row]
     else:
         if isinstance(row, str):
+            #str.lower(row.strip())
             return str.lower(row.replace(" ", ""))
         else:
             return ""
